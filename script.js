@@ -1,30 +1,20 @@
 // Dark Mode Toggle
-function toggleMode() {
-    const body = document.body;
+const html = document.documentElement;
+const switchBtn = document.getElementById('switch');
 
-    if (body.classList.contains('dark')) {
-        body.classList.remove('dark');
-        localStorage.setItem('theme', 'light');
-    } else {
-        body.classList.add('dark');
-        localStorage.setItem('theme', 'dark');
-    }
+function isDark() {
+    return html.classList.contains('dark');
 }
 
-// Carregar tema salvo
-window.addEventListener('load', () => {
-    const theme = localStorage.getItem('theme') || 'light';
-
-    if (theme === 'dark') {
-        document.body.classList.add('dark');
-    }
-});
-
-// Detectar preferência do sistema
-if (!localStorage.getItem('theme')) {
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    if (prefersDark) {
-        document.body.classList.add('dark');
-        localStorage.setItem('theme', 'dark');
-    }
+function syncButtonState() {
+    switchBtn.setAttribute('aria-pressed', String(isDark()));
 }
+
+function toggleTheme() {
+    html.classList.toggle('dark');
+    localStorage.setItem('theme', isDark() ? 'dark' : 'light');
+    syncButtonState();
+}
+
+switchBtn.addEventListener('click', toggleTheme);
+syncButtonState();

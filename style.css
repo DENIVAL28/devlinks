@@ -4,31 +4,52 @@
     box-sizing: border-box;
 }
 
+html {
+    color-scheme: light dark;
+}
+
 :root {
     --text-color: #333333;
     --bg-color: #ffffff;
-    --bg-url: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='40' fill='%237c3aed' opacity='0.1'/%3E%3C/svg%3E");
+    --glow: radial-gradient(circle at top, rgba(124, 58, 237, 0.14), transparent 60%);
     --stroke-color: #7c3aed;
     --surface-color: #f5f5f5;
     --link-bg: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%);
     --link-hover: linear-gradient(135deg, #6d28d9 0%, #9333ea 100%);
 }
 
-body.dark {
+html.dark {
     --text-color: #e1e1e6;
     --bg-color: #121214;
-    --bg-url: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='40' fill='%237c3aed' opacity='0.05'/%3E%3C/svg%3E");
+    --glow: radial-gradient(circle at top, rgba(124, 58, 237, 0.10), transparent 60%);
     --surface-color: #202024;
     --link-bg: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%);
     --link-hover: linear-gradient(135deg, #6d28d9 0%, #9333ea 100%);
 }
 
 body {
-    background: var(--bg-color) var(--bg-url) no-repeat top center;
+    min-height: 100vh;
+    background-color: var(--bg-color);
+    background-image: var(--glow);
+    background-repeat: no-repeat;
+    background-position: top center;
     background-attachment: fixed;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
     color: var(--text-color);
-    transition: background 0.3s, color 0.3s;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+a:focus-visible,
+button:focus-visible {
+    outline: 2px solid var(--stroke-color);
+    outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+    }
 }
 
 #container {
@@ -86,50 +107,40 @@ body {
 /* Switch (Dark Mode) */
 #switch {
     position: relative;
+    display: block;
     width: 64px;
+    height: 24px;
     margin: 16px auto 32px;
+    padding: 0;
+    background: var(--surface-color);
+    border: 1px solid var(--stroke-color);
+    border-radius: 9999px;
+    backdrop-filter: blur(4px);
+    cursor: pointer;
+    transition: background 0.3s;
 }
 
-#switch button {
+#switch::before {
+    content: "☀️";
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: 32px;
     height: 32px;
+    font-size: 14px;
     background: var(--stroke-color);
-    border: 0;
     border-radius: 50%;
     position: absolute;
     top: 50%;
     left: 0;
     transform: translateY(-50%);
-    cursor: pointer;
-    transition: all 0.3s;
-    z-index: 1;
+    transition: left 0.3s;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
 }
 
-#switch button::before {
-    content: "☀️";
-    font-size: 16px;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
-
-body.dark #switch button {
-    left: 32px;
-}
-
-body.dark #switch button::before {
+html.dark #switch::before {
     content: "🌙";
-}
-
-#switch span {
-    display: block;
-    width: 64px;
-    height: 24px;
-    background: var(--surface-color);
-    border: 1px solid var(--stroke-color);
-    border-radius: 9999px;
-    backdrop-filter: blur(4px);
+    left: 32px;
 }
 
 /* Links */
