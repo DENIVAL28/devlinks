@@ -1,0 +1,209 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --text-color: #333333;
+    --bg-color: #ffffff;
+    --bg-url: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='40' fill='%237c3aed' opacity='0.1'/%3E%3C/svg%3E");
+    --stroke-color: #7c3aed;
+    --surface-color: #f5f5f5;
+    --link-bg: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%);
+    --link-hover: linear-gradient(135deg, #6d28d9 0%, #9333ea 100%);
+}
+
+body.dark {
+    --text-color: #e1e1e6;
+    --bg-color: #121214;
+    --bg-url: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='40' fill='%237c3aed' opacity='0.05'/%3E%3C/svg%3E");
+    --surface-color: #202024;
+    --link-bg: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%);
+    --link-hover: linear-gradient(135deg, #6d28d9 0%, #9333ea 100%);
+}
+
+body {
+    background: var(--bg-color) var(--bg-url) no-repeat top center;
+    background-attachment: fixed;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    color: var(--text-color);
+    transition: background 0.3s, color 0.3s;
+}
+
+#container {
+    width: 100%;
+    max-width: 588px;
+    margin: 56px auto 0;
+    padding: 0 24px;
+}
+
+/* Profile */
+#profile {
+    text-align: center;
+    padding: 24px 0;
+    animation: slideDown 0.6s ease-out;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.avatar {
+    width: 112px;
+    height: 112px;
+    border-radius: 50%;
+    border: 4px solid var(--stroke-color);
+    display: block;
+    margin: 0 auto 32px;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.avatar:hover {
+    transform: scale(1.05);
+}
+
+#profile p {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+#profile p + p {
+    font-size: 16px;
+    font-weight: 400;
+    opacity: 0.8;
+}
+
+/* Switch (Dark Mode) */
+#switch {
+    position: relative;
+    width: 64px;
+    margin: 16px auto 32px;
+}
+
+#switch button {
+    width: 32px;
+    height: 32px;
+    background: var(--stroke-color);
+    border: 0;
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+    cursor: pointer;
+    transition: all 0.3s;
+    z-index: 1;
+}
+
+#switch button::before {
+    content: "☀️";
+    font-size: 16px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+body.dark #switch button {
+    left: 32px;
+}
+
+body.dark #switch button::before {
+    content: "🌙";
+}
+
+#switch span {
+    display: block;
+    width: 64px;
+    height: 24px;
+    background: var(--surface-color);
+    border: 1px solid var(--stroke-color);
+    border-radius: 9999px;
+    backdrop-filter: blur(4px);
+}
+
+/* Links */
+#links {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 24px 0;
+}
+
+#links a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 16px 24px;
+    background: var(--link-bg);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 16px;
+    border: 2px solid transparent;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+#links a:hover {
+    background: var(--link-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 16px rgba(124, 58, 237, 0.3);
+}
+
+#links a:active {
+    transform: translateY(0);
+}
+
+#links svg {
+    width: 24px;
+    height: 24px;
+    fill: currentColor;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 24px 0 32px;
+    font-size: 14px;
+    opacity: 0.6;
+}
+
+/* Responsivo */
+@media (max-width: 620px) {
+    #container {
+        padding: 0 16px;
+    }
+
+    #profile {
+        padding: 16px 0;
+    }
+
+    .avatar {
+        width: 88px;
+        height: 88px;
+        margin-bottom: 24px;
+    }
+
+    #profile p {
+        font-size: 20px;
+    }
+
+    #links a {
+        padding: 12px 20px;
+        font-size: 14px;
+    }
+}
